@@ -11,6 +11,6 @@ class TugasController extends Controller
             'title' => 'Data Tugas',
             'menuAdminTugas' => 'active',
         );
-        return view('admin/tugas/index',$data);
+        return view('admin.tugas.index',$data);
     }
 }

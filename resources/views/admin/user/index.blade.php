@@ -16,11 +16,11 @@
             </div>
 
             <div>
-                <a href="#" class="btn btn-sm btn-success">
+                {{-- <a href="#" class="btn btn-sm btn-success">
                     <i class="fas fa-file-excel mr-2"></i>
                     Excel
-                </a>
-                <a href="#" class="btn btn-sm btn-danger">
+                </a> --}}
+                <a href="{{route('userPdf')}}" class="btn btn-sm btn-danger" target="__blank">
                     <i class="fas fa-file-pdf mr-2"></i>
                     Pdf
                 </a>
@@ -28,7 +28,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                     <thead class="bg-primary text-white">
                         <tr class="text-center">
                             <th>NO</th>

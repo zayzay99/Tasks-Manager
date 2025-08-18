@@ -25,7 +25,9 @@ class TugasController extends Controller
             $data = array(
                 'title' => 'Data Tugas',
                 'menuKaryawanTugas' => 'active',
-                
+                'tugas' => Tugas::with('user')->where('user_id', $user->id)->first(),
+                // 'user' => $user,
+
             );
             return view('karyawan/tugas/index', $data);
         }
@@ -114,13 +116,29 @@ class TugasController extends Controller
 
     public function pdf()
     {
+        $user = Auth::user();
         $filename = now()->format('d-m-Y_H.i.s');
-        $data = array(
-            'tugas' => Tugas::get(),
-            'tanggal' => now()->format('d-m-Y'),
-            'jam' => now()->format('H:i:s'),
-        );
-        $pdf = Pdf::loadView('admin/tugas/pdf', $data);
-        return $pdf->setPaper('a4', 'landscape')->stream('DataUser_' . $filename . '.pdf');
+
+        if ($user->jabatan == 'Admin') {
+            $data = array(
+                'tugas' => Tugas::get(),
+                'tanggal' => now()->format('d-m-Y'),
+                'jam' => now()->format('H:i:s'),
+            );
+            $pdf = Pdf::loadView('admin/tugas/pdf', $data);
+            return $pdf->setPaper('a4', 'landscape')->stream('DataUser_' . $filename . '.pdf');
+        } else {
+            $data = array(
+                
+                'tanggal' => now()->format('d-m-Y'),
+                'jam' => now()->format('H:i:s'),
+                'tugas'=> Tugas::with('user')->where('user_id', $user->id)->get(),
+            );
+            $pdf = Pdf::loadView('karyawan/tugas/pdf', $data);
+            return $pdf->setPaper('a4', 'portrait')->stream('DataUser_' . $filename . '.pdf');
+        }
     }
 }
+
+
+//19:34 LELAH GUEEE
